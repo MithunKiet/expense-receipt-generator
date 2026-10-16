@@ -86,27 +86,40 @@ body{display:flex;flex-direction:column;height:100vh;overflow:hidden}
 </head><body>
   <nav id="suite-nav" aria-label="Main Navigation">
     <div class="suite-nav-inner">
-      <a href="index.html" class="suite-brand" title="Billing &amp; Receipt Suite">
-        <span class="suite-brand-icon">⚡</span>
-        <span class="suite-brand-text">Billing<span class="suite-brand-accent">Suite</span></span>
+      <a href="index.html" class="suite-brand" title="Expense &amp; Receipt Studio">
+        <span class="suite-brand-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </span>
+        <span class="suite-brand-text">
+          <span class="suite-brand-name">Receipt Studio</span>
+          <span class="suite-brand-tag">Offline Generator Suite</span>
+        </span>
       </a>
+
       <div class="suite-nav-links">
         <a href="index.html" class="suite-nav-link" id="nav-home">
-          <span class="suite-nav-icon">🏠</span>
+          <svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           <span class="suite-nav-label">Dashboard</span>
         </a>
         <a href="fuel.html" class="suite-nav-link" id="nav-fuel">
-          <span class="suite-nav-icon">⛽</span>
+          <svg viewBox="0 0 24 24"><path d="M3 22v-8a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v8"/><path d="M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L18 5"/><line x1="3" x2="11" y1="22" y2="22"/></svg>
           <span class="suite-nav-label">Fuel Receipt</span>
         </a>
         <a href="invoice.html" class="suite-nav-link" id="nav-invoice">
-          <span class="suite-nav-icon">📄</span>
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
           <span class="suite-nav-label">Invoice Maker</span>
         </a>
         <a href="airtel.html" class="suite-nav-link active" id="nav-airtel">
-          <span class="suite-nav-icon">📱</span>
+          <svg viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><line x1="12" x2="12.01" y1="18" y2="18"/></svg>
           <span class="suite-nav-label">Airtel Bill</span>
         </a>
+      </div>
+
+      <div class="suite-nav-meta">
+        <span class="offline-status">
+          <span class="status-dot"></span>
+          Offline Ready
+        </span>
       </div>
     </div>
   </nav>
@@ -116,8 +129,8 @@ body{display:flex;flex-direction:column;height:100vh;overflow:hidden}
  <div class="logo">a</div>
  <div><h1>Airtel Bill Builder</h1><small>Mobile Services · Tax Invoice</small></div>
  <div class="sp"></div>
- <button class="btn" id="reset" type="button">↺ Reset</button>
- <button class="btn pri" type="button" onclick="window.print()">🖨 Print</button>
+ <button class="btn" id="reset" type="button">Reset</button>
+ <button class="btn pri" type="button" onclick="window.print()">Print Document</button>
 </header>
 
 <aside>
