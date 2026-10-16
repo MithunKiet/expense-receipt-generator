@@ -1,48 +1,77 @@
-# Fuel Receipt Generator
+# Billing & Receipt Studio (Unified Suite)
 
-A single-page, client-side tool that generates printable HPCL-style fuel purchase receipts for a date range. Open `receipt.html` in a browser, fill in the form, and get one receipt per day styled like a petrol pump printout.
+A clean, unified client-side suite of invoice and receipt generator tools. All tools run completely offline in your web browser with live previews, thermal printer typography, and instant print-to-PDF support.
 
-## Features
+---
 
-- Generates one receipt per day for a given From/To date range.
-- Supports Petrol, Diesel, CNG, and EV vehicle types.
-- Randomizes fuel volume within a configurable litre range, and the time of purchase.
-- Looks up the fuel rate for each date from a fuel price API, falling back to a built-in rate schedule (`FALLBACK_FUEL_RATE_SCHEDULE` in `generator.js`) if the API call fails or is unavailable.
-- Each receipt shows the rate source used (API vs. fallback schedule).
-- Print-friendly layout (`@media print` styles) for generating physical copies.
+## 📁 Clean Project Structure
 
-## Usage
+```text
+e:\New folder/
+├── index.html                   # Central Dashboard & Portal
+├── fuel.html                    # Tool 1: Fuel Receipt Studio (HPCL)
+├── invoice.html                 # Tool 2: Computer & Retail Invoice Maker
+├── airtel.html                  # Tool 3: Airtel Postpaid Mobile Bill Builder
+├── generator.js                 # Fuel receipt generation logic & rates
+├── navbar.css                   # Scoped stylesheet for the unified top menu
+├── README.md                    # Project documentation
+├── assets/                      # Consolidated images & fonts
+│   ├── cn.png                   # Invoice company branding logo
+│   ├── hplogo.png               # HPCL fuel receipt logo
+│   └── fonts/                   # Thermal printer font
+│       ├── PressStart2P-Regular.ttf
+│       └── OFL-PressStart2P.txt
+└── tests/                       # Unit tests
+    └── generator.test.cjs
+```
 
-1. Open `receipt.html` in any modern browser (no build step or server required).
-2. Fill in the form:
-   - **VEH TYPE** — Petrol, Diesel, CNG, or EV
-   - **VEH NO** — vehicle registration number
-   - **CUSTOMER NAME**
-   - **FROM DATE** / **TO DATE** — date range to generate receipts for (inclusive)
-   - **FUEL RANGE (LTR / KG / kWh)** — min/max quantity to randomize per receipt (0.01–1,000,000, at most two decimal places)
-   - **CITY** / **STATE**
-3. Click **Generate Receipts**. One receipt card is rendered per day in the range.
-4. Use your browser's print function to print or save the receipts as a PDF.
+---
 
-## Files
+## 🛠 Included Tools
 
-| File | Description |
-|---|---|
-| `receipt.html` | Form UI and receipt layout/styles |
-| `generator.js` | Date handling, fuel rate lookup/fallback, and receipt generation logic |
-| `hplogo.png` | Logo used on the generated receipts |
+### 1. ⛽ Fuel Receipt Studio (`fuel.html`)
+* **Purpose**: Generates authentic thermal dot-matrix receipts for HPCL fuel stations.
+* **Fuel Types**: Petrol (`LTR`), Diesel (`LTR`), CNG (`KG`), and Electric Vehicle (`kWh`).
+* **Features**:
+  - Customizable date intervals (daily receipt generation up to 366 days).
+  - Configurable random fuel quantity range.
+  - Built-in fallback fuel rate schedule or configurable live endpoint lookup.
+  - Press Start 2P true thermal dot-matrix typography.
+  - Clean thermal paper preview and print layout (`@media print` with auto-hidden controls).
 
-## Notes
+### 2. 📄 Computer & Retail Invoice Maker (`invoice.html`)
+* **Purpose**: Generates itemized hardware, software, and repair invoices.
+* **Features**:
+  - Dynamic bill date setting and one-click new invoice reset.
+  - Itemized tables with serial numbers, item descriptions, rates, and totals.
+  - Standard terms & conditions, bank details, and authorized signature section.
+  - Bootstrap 5 responsive UI with dedicated `@media print` clean layout.
 
-- Live prices are disabled by default. Built-in sample prices are location-independent, last updated January 2025, and continue to apply to later dates; dates before the schedule use the earliest sample rate.
-- To enable live prices, serve this app over HTTP(S) and set the `fuel-rate-endpoint` meta tag in `receipt.html` to a same-origin backend route such as `/api/fuel-prices`. This repository does not include that backend. Keep RapidAPI/provider credentials exclusively on your backend, never in browser JavaScript. The route receives `country`, `state`, `city`, `fuel`, and `date` query parameters and must return JSON such as `{"rate": 94.31}` with a numeric rate between 0.01 and 1,000,000. The backend must validate the provider response and requested fuel/date/location. Requests are limited to four at a time, with a five-second timeout per request; failures use the sample schedule.
-- Quantity units are litres for Petrol/Diesel, kilograms for CNG, and kWh for EV. Print output hides the form and page controls.
-- Receipt numbers are derived from the receipt date, so the same date always yields the same number and overlapping ranges reuse the number for the same date.
-- A single generation is capped at `MAX_RECEIPT_DAYS` (366) days.
-- This tool is intended for generating sample/mock receipts (e.g. for testing or demo purposes) and is not affiliated with HPCL.
+### 3. 📱 Airtel Mobile Bill Builder (`airtel.html`)
+* **Purpose**: Creates pixel-perfect Airtel postpaid tax invoices.
+* **Features**:
+  - **Dynamic Barcode**: Auto-renders Code-128 barcode directly from Bill Number.
+  - **Automatic Math**: Real-time GST calculation, total amount, late fees, and amount in words.
+  - **Live Preview Stage**: Auto-scaling A4 preview fitting any screen resolution.
+  - **Toggleable Addons**: Option to show/hide BHIM UPI QR Code and Page numbers.
+  - **Exact Typography**: Uses embedded TondoB & TondoR fonts for authentic look.
 
-## Validation
+---
 
-Run `node --test tests/generator.test.cjs` with Node.js 18 or later. The suite uses the built-in test runner and requires no packages. It covers dates, receipt generation, escaping, quantities, bounded API concurrency, timeout fallback, response validation, and retry behavior.
+## 🚀 Getting Started
 
-The receipt uses the bundled Press Start 2P font, licensed under the SIL Open Font License (see `assets/fonts/OFL-PressStart2P.txt`). No external font request is needed.
+No build step, Node dependencies, or web servers required.
+
+1. Open [index.html](file:///e:/New%20folder/index.html) in any browser to access the central dashboard.
+2. Navigate between **Fuel Receipt**, **Invoice Maker**, and **Airtel Bill** using the top navigation bar.
+3. To print or export as PDF, click **Print** or press `Ctrl + P`. All menus and controls are automatically hidden when printing.
+
+---
+
+## 🧪 Testing
+
+To validate the fuel receipt generator logic, run:
+```bash
+node --test tests/generator.test.cjs
+```
+This runs the built-in Node.js test runner covering date edge cases, fuel volume calculations, API timeouts, and character escaping.

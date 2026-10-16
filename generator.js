@@ -167,7 +167,7 @@ function generateReceiptHTML(data) {
 
   return `
       <div class="receipt">
-        <img class="logo" src="./hplogo.png" alt="Hindustan Petroleum Logo">
+        <img class="logo" src="./assets/hplogo.png" alt="Hindustan Petroleum Logo">
         <div class="title">WELCOME!!!</div>
         <div class="receipt-tag">SAMPLE RECEIPT</div>
         <div class="section section-center">

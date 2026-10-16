@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Billing &amp; Receipt Suite | Unified Dashboard</title>
+  <link rel="stylesheet" href="./navbar.css">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --accent-fuel: #f97316;
+      --accent-invoice: #10b981;
+      --accent-airtel: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-content {
+      flex: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px 20px 64px;
+      width: 100%;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(59, 130, 246, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 9999px;
+      color: #93c5fd;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Grid of Tools */
+    .suite-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 28px;
+      margin-bottom: 56px;
+    }
+
+    .suite-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s ease-out;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .suite-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .suite-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+
+    .card-fuel::before {
+      background: linear-gradient(90deg, #f97316, #fb923c);
+    }
+
+    .card-invoice::before {
+      background: linear-gradient(90deg, #10b981, #34d399);
+    }
+
+    .card-airtel::before {
+      background: linear-gradient(90deg, #ef4444, #f87171);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+
+    .card-fuel .card-icon {
+      background: rgba(249, 115, 22, 0.15);
+      border: 1px solid rgba(249, 115, 22, 0.3);
+    }
+
+    .card-invoice .card-icon {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .card-airtel .card-icon {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .card-title-group h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .card-tagline {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      color: #cbd5e1;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .card-features {
+      list-style: none;
+      margin-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card-features li {
+      font-size: 13px;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-features li::before {
+      content: "✓";
+      color: #38bdf8;
+      font-weight: bold;
+    }
+
+    .card-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .card-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      color: #ffffff;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+
+    .card-fuel .card-btn {
+      background: #ea580c;
+    }
+    .card-fuel .card-btn:hover {
+      background: #c2410c;
+    }
+
+    .card-invoice .card-btn {
+      background: #059669;
+    }
+    .card-invoice .card-btn:hover {
+      background: #047857;
+    }
+
+    .card-airtel .card-btn {
+      background: #dc2626;
+    }
+    .card-airtel .card-btn:hover {
+      background: #b91c1c;
+    }
+
+    /* Meta Highlights */
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      padding: 24px;
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+    }
+
+    .highlight-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .highlight-icon {
+      font-size: 22px;
+      line-height: 1;
+      padding-top: 2px;
+    }
+
+    .highlight-text h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 2px;
+    }
+
+    .highlight-text p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 24px 20px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Suite Navigation Bar -->
+  <nav id="suite-nav" aria-label="Main Navigation">
+    <div class="suite-nav-inner">
+      <a href="./index.html" class="suite-brand" title="Billing &amp; Receipt Suite">
+        <span class="suite-brand-icon">⚡</span>
+        <span class="suite-brand-text">Billing<span class="suite-brand-accent">Suite</span></span>
+      </a>
+      <div class="suite-nav-links">
+        <a href="index.html" class="suite-nav-link active" id="nav-home">
+          <span class="suite-nav-icon">🏠</span>
+          <span class="suite-nav-label">Dashboard</span>
+        </a>
+        <a href="fuel.html" class="suite-nav-link" id="nav-fuel">
+          <span class="suite-nav-icon">⛽</span>
+          <span class="suite-nav-label">Fuel Receipt</span>
+        </a>
+        <a href="invoice.html" class="suite-nav-link" id="nav-invoice">
+          <span class="suite-nav-icon">📄</span>
+          <span class="suite-nav-label">Invoice Maker</span>
+        </a>
+        <a href="airtel.html" class="suite-nav-link" id="nav-airtel">
+          <span class="suite-nav-icon">📱</span>
+          <span class="suite-nav-label">Airtel Bill</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Dashboard Content -->
+  <main class="main-content">
+    <div class="hero">
+      <div class="hero-badge">All-in-One Generator Suite</div>
+      <h1>Billing &amp; Receipt Studio</h1>
+      <p>A unified offline-friendly suite of invoice and receipt generators with high-fidelity live previews, thermal layouts, and pixel-perfect print outputs.</p>
+    </div>
+
+    <!-- 3 Core Application Cards -->
+    <div class="suite-grid">
+
+      <!-- Tool 1: Fuel Receipt Studio -->
+      <article class="suite-card card-fuel">
+        <div>
+          <div class="card-header">
+            <div class="card-icon" aria-hidden="true">⛽</div>
+            <div class="card-title-group">
+              <h2>Fuel Receipt Studio</h2>
+              <div class="card-tagline">Hindustan Petroleum (HPCL) Receipts</div>
+            </div>
+          </div>
+          <p class="card-desc">Generate realistic thermal printer fuel receipts for Petrol, Diesel, CNG, and EV charging. Features dynamic date intervals, rate lookups, and thermal paper preview.</p>
+          <ul class="card-features">
+            <li>Press Start 2P thermal dot-matrix typography</li>
+            <li>Multi-product support (Petrol, Diesel, CNG, EV)</li>
+            <li>Multi-receipt batch generator with custom ranges</li>
+            <li>Zero margins and grayscale print optimization</li>
+          </ul>
+          <div class="card-badges">
+            <span class="badge">HPCL Studio</span>
+            <span class="badge">Thermal Layout</span>
+            <span class="badge">Print / Save PDF</span>
+          </div>
+        </div>
+        <a href="fuel.html" class="card-btn">Open Fuel Studio &rarr;</a>
+      </article>
+
+      <!-- Tool 2: Invoice Maker -->
+      <article class="suite-card card-invoice">
+        <div>
+          <div class="card-header">
+            <div class="card-icon" aria-hidden="true">📄</div>
+            <div class="card-title-group">
+              <h2>Invoice Maker</h2>
+              <div class="card-tagline">Computer Sales &amp; Repair Invoices</div>
+            </div>
+          </div>
+          <p class="card-desc">Create professional, itemized computer repair and hardware invoices. Complete with branding, customer details, terms of service, and official signature blocks.</p>
+          <ul class="card-features">
+            <li>Dynamic bill date input and new invoice resets</li>
+            <li>Itemized hardware parts and service labor fees</li>
+            <li>Company logo branding with payment acknowledgements</li>
+            <li>Print-ready A4 stylesheet with controls auto-hidden</li>
+          </ul>
+          <div class="card-badges">
+            <span class="badge">Bootstrap 5</span>
+            <span class="badge">Tax Invoice</span>
+            <span class="badge">Company Stamp Ready</span>
+          </div>
+        </div>
+        <a href="invoice.html" class="card-btn">Open Invoice Maker &rarr;</a>
+      </article>
+
+      <!-- Tool 3: Airtel Mobile Bill Builder -->
+      <article class="suite-card card-airtel">
+        <div>
+          <div class="card-header">
+            <div class="card-icon" aria-hidden="true">📱</div>
+            <div class="card-title-group">
+              <h2>Airtel Mobile Bill</h2>
+              <div class="card-tagline">Postpaid Mobile Services · Tax Invoice</div>
+            </div>
+          </div>
+          <p class="card-desc">Pixel-perfect Airtel postpaid tax invoice builder with real-time Code-128 barcode rendering, live scaled A4 stage, automatic GST math, and UPI QR code toggles.</p>
+          <ul class="card-features">
+            <li>Real-time dynamic Code-128 barcode from Bill No</li>
+            <li>Automated GST &amp; late fee calculation with words</li>
+            <li>Live A4 scaled document preview stage</li>
+            <li>Toggleable BHIM UPI QR Code &amp; page numbers</li>
+          </ul>
+          <div class="card-badges">
+            <span class="badge">Code-128 Barcode</span>
+            <span class="badge">BHIM UPI QR</span>
+            <span class="badge">A4 Scaled Stage</span>
+          </div>
+        </div>
+        <a href="airtel.html" class="card-btn">Open Airtel Bill &rarr;</a>
+      </article>
+
+    </div>
+
+    <!-- Highlights Section -->
+    <div class="highlights">
+      <div class="highlight-item">
+        <div class="highlight-icon">🔒</div>
+        <div class="highlight-text">
+          <h3>100% Client-Side Privacy</h3>
+          <p>All calculations, barcodes, and receipts are generated entirely inside your browser. No private billing data leaves your machine.</p>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">🖨️</div>
+        <div class="highlight-text">
+          <h3>Clean Print Integration</h3>
+          <p>Every tool is equipped with dedicated print media queries that automatically hide all menus, navigation, and input forms.</p>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">⚡</div>
+        <div class="highlight-text">
+          <h3>Unified Navigation</h3>
+          <p>Effortlessly switch between any of the three billing tools without losing your place or restarting your workflow.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>Billing &amp; Receipt Suite &bull; Unified Repository &bull; Fuel-Receipt-Generator</p>
+  </footer>
+
+</body>
+</html>

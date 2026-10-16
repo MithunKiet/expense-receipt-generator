@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Receipt</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="navbar.css">
+    <style>
+        #suite-nav {
+            margin: -20px -20px 24px -20px;
+        }
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: none !important;
+            box-shadow: none !important;
+        }
+
+        .company-logo img {
+            height: 50px;
+        }
+
+        .invoice-details,
+        .terms,
+        .acknowledgment {
+            margin-top: 20px;
+        }
+
+        .terms {
+            background-color: #f8f8f8;
+            padding: 10px;
+        }
+
+        table {
+            margin-top: 10px;
+        }
+
+        .terms ul li,
+        th {
+            font-size: 12px;
+        }
+
+        .mt-xl {
+            margin-top: 5rem !important;
+        }
+
+        .input-section {
+            max-width: 800px;
+            margin: 0 auto 20px auto;
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        @media print {
+            body {
+                background-color: white !important;
+            }
+
+            .container,
+            .terms {
+                background: none !important;
+                box-shadow: none !important;
+            }
+
+            .btn,
+            .input-section {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+  <nav id="suite-nav" aria-label="Main Navigation">
+    <div class="suite-nav-inner">
+      <a href="index.html" class="suite-brand" title="Billing &amp; Receipt Suite">
+        <span class="suite-brand-icon">⚡</span>
+        <span class="suite-brand-text">Billing<span class="suite-brand-accent">Suite</span></span>
+      </a>
+      <div class="suite-nav-links">
+        <a href="index.html" class="suite-nav-link" id="nav-home">
+          <span class="suite-nav-icon">🏠</span>
+          <span class="suite-nav-label">Dashboard</span>
+        </a>
+        <a href="fuel.html" class="suite-nav-link" id="nav-fuel">
+          <span class="suite-nav-icon">⛽</span>
+          <span class="suite-nav-label">Fuel Receipt</span>
+        </a>
+        <a href="invoice.html" class="suite-nav-link active" id="nav-invoice">
+          <span class="suite-nav-icon">📄</span>
+          <span class="suite-nav-label">Invoice Maker</span>
+        </a>
+        <a href="airtel.html" class="suite-nav-link" id="nav-airtel">
+          <span class="suite-nav-icon">📱</span>
+          <span class="suite-nav-label">Airtel Bill</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+    <div class="input-section">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label for="billDateInput" class="form-label"><strong>Enter Bill Date</strong></label>
+                <input type="date" id="billDateInput" class="form-control">
+            </div>
+            <div class="col-md-8 d-flex gap-2 flex-wrap">
+                <button class="btn btn-success" onclick="setBillDate()">Set Date</button>
+                <button class="btn btn-secondary" onclick="newInvoice()">New Invoice</button>
+                <button class="btn btn-primary" onclick="printInvoice()">Print Invoice</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container p-1">
+        <div>
+            <div class="row" style="margin-bottom: 70px;">
+                <div class="col-md-4 text-start">
+                   <img src="./assets/cn.png" alt="Company Logo" class="img-fluid">
+                    <p class="mb-0">
+                        <strong>Touch Net India Teleservices</strong><br>
+                        B-74, Sec-65, Noida, Uttar Pradesh 201301
+                    </p>
+                </div>
+
+                <div class="col-md-4 text-start">
+                    <p>
+                        <strong>Name:</strong> Mithun Kumar
+                        <br><strong>Address:</strong> Flat No H-94 gama 2, H122 7th Street Greater Noida Uttar Pradesh 201308
+                    </p>
+                </div>
+
+                <div class="col-md-4 text-end">
+                    <p>
+                        <strong>Invoice No:</strong> <span id="invoiceNo"></span>
+                        <br><strong>Account No:</strong> <span id="accountNo"></span>
+                        <br><strong>Bill Date:</strong> <span id="billDate">Select Date</span>
+                    </p>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="section mt-3">
+                <h6>Tax Details</h6>
+                <table class="table table-bordered text-center">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Taxable Amount</th>
+                            <th>CGST Rate%</th>
+                            <th>CGST Amount</th>
+                            <th>SGST Rate%</th>
+                            <th>SGST Amount</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2397.00</td>
+                            <td>9%</td>
+                            <td>215.73</td>
+                            <td>9%</td>
+                            <td>215.73</td>
+                            <td>2828.46</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section mt-3">
+                <h6>Service Plan Summary</h6>
+                <table class="table table-bordered text-center">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Plan Speed</th>
+                            <th>Plan Package</th>
+                            <th>Plan Validity</th>
+                            <th>Discount</th>
+                            <th>Plan Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>100Mbps</td>
+                            <td>Unlimited</td>
+                            <td>Quarterly</td>
+                            <td>0</td>
+                            <td>Rs. 799.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section mt-3">
+                <h6>Receipt Details</h6>
+                <table class="table table-bordered text-center">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Invoice No</th>
+                            <th>Internet Service Description</th>
+                            <th>Amount Incl. Tax</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="receiptInvoiceNo"></td>
+                            <td></td>
+                            <td>Rs. 2828.46</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="terms mt-3 p-3 border rounded">
+                <h6>Terms and Conditions</h6>
+                <ul>
+                    <li>Cheques to be in favour of 'Touch Net India Teleservices'.</li>
+                    <li>In case of cheque bounce, Rs. 100 penalty will be applicable.</li>
+                    <li>Late fee charge applies if the bill is paid after the due date.</li>
+                    <li>In case of overdue, the right to deactivate your services is reserved.</li>
+                    <li>This Invoice is system generated; no signature or stamp is required.</li>
+                </ul>
+            </div>
+
+            <div class="acknowledgment mt-xl">
+                <h6>Acknowledgment Slip</h6>
+                <table class="table table-bordered text-center">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Account No</th>
+                            <th>Subscriber Name</th>
+                            <th>Invoice No</th>
+                            <th>Payment Method</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="ackAccountNo"></td>
+                            <td>Mithun Kumar</td>
+                            <td id="ackInvoiceNo"></td>
+                            <td>Cash</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateInvoiceNo() {
+            return Math.floor(1000000 + Math.random() * 9000000);
+        }
+
+        function generateAccountNo() {
+            return 'IN' + Math.floor(100000 + Math.random() * 900000);
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { day: '2-digit', month: 'short', year: 'numeric' };
+            return date.toLocaleDateString('en-GB', options);
+        }
+
+        function setBillDate() {
+            const inputDate = document.getElementById('billDateInput').value;
+            if (!inputDate) {
+                alert('Please select a bill date.');
+                return;
+            }
+            document.getElementById('billDate').textContent = formatDate(inputDate);
+        }
+
+        function printInvoice() {
+            const billDate = document.getElementById('billDate').textContent;
+            if (billDate === 'Select Date') {
+                alert('Please set bill date before printing.');
+                return;
+            }
+            window.print();
+        }
+
+        function newInvoice() {
+            const invoiceNo = generateInvoiceNo();
+            const accountNo = generateAccountNo();
+
+            document.getElementById('invoiceNo').textContent = invoiceNo;
+            document.getElementById('accountNo').textContent = accountNo;
+            document.getElementById('receiptInvoiceNo').textContent = invoiceNo;
+            document.getElementById('ackInvoiceNo').textContent = invoiceNo;
+            document.getElementById('ackAccountNo').textContent = accountNo;
+        }
+
+        newInvoice();
+    </script>
+
+</body>
+
+</html>

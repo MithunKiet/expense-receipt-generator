@@ -89,9 +89,37 @@
       .receipt { flex: 0 0 256px; width: 256px; padding: 10px; border: 0; box-shadow: none; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
     }
   </style>
+  <link rel="stylesheet" href="navbar.css" />
 </head>
 
 <body>
+  <nav id="suite-nav" aria-label="Main Navigation">
+    <div class="suite-nav-inner">
+      <a href="index.html" class="suite-brand" title="Billing &amp; Receipt Suite">
+        <span class="suite-brand-icon">⚡</span>
+        <span class="suite-brand-text">Billing<span class="suite-brand-accent">Suite</span></span>
+      </a>
+      <div class="suite-nav-links">
+        <a href="index.html" class="suite-nav-link" id="nav-home">
+          <span class="suite-nav-icon">🏠</span>
+          <span class="suite-nav-label">Dashboard</span>
+        </a>
+        <a href="fuel.html" class="suite-nav-link active" id="nav-fuel">
+          <span class="suite-nav-icon">⛽</span>
+          <span class="suite-nav-label">Fuel Receipt</span>
+        </a>
+        <a href="invoice.html" class="suite-nav-link" id="nav-invoice">
+          <span class="suite-nav-icon">📄</span>
+          <span class="suite-nav-label">Invoice Maker</span>
+        </a>
+        <a href="airtel.html" class="suite-nav-link" id="nav-airtel">
+          <span class="suite-nav-icon">📱</span>
+          <span class="suite-nav-label">Airtel Bill</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
   <header class="app-header">
     <div class="brand-mark" aria-hidden="true">F</div>
     <div><h1>Fuel Receipt Studio</h1><p>Create, preview &amp; print your sample receipts.</p></div>
