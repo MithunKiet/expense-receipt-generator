@@ -7,7 +7,7 @@ A clean, unified client-side suite of invoice and receipt generator tools. All t
 ## 📁 Clean Project Structure
 
 ```text
-e:\New folder/
+e:\expense-receipt-generator/
 ├── index.html                   # Central Dashboard & Portal
 ├── fuel.html                    # Tool 1: Fuel Receipt Studio (HPCL)
 ├── invoice.html                 # Tool 2: Computer & Retail Invoice Maker
